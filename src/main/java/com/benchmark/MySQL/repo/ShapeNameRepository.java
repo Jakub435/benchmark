@@ -8,4 +8,5 @@ public interface ShapeNameRepository extends JpaRepository<ShapeName, Long> {
 
     @Query(value = "SELECT id FROM bench.shapename WHERE name = ?", nativeQuery = true)
     int getId(String name);
+    boolean existsByName(String name);
 }

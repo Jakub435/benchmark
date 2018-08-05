@@ -1,15 +1,12 @@
-package com.benchmark.response;
+package com.benchmark.model;
 
-import java.util.List;
-
-public class CoordinateGetResponse {
+public class CoordinatePostResponse {
     private double mySQL;
     private double postGIS;
     private double neo4j;
     private double cassandra;
     private double orientDb;
     private double MongoDb;
-    private List<Coordinate> coordinates;
 
     public double getMySQL() {
         return mySQL;
@@ -57,13 +54,5 @@ public class CoordinateGetResponse {
 
     public void setMongoDb(double mongoDb) {
         MongoDb = mongoDb;
-    }
-
-    public List<Coordinate> getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(List<Coordinate> coordinates) {
-        this.coordinates = coordinates;
     }
 }

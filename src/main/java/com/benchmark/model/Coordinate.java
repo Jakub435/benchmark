@@ -1,4 +1,4 @@
-package com.benchmark.response;
+package com.benchmark.model;
 
 
 public class Coordinate {
@@ -24,5 +24,15 @@ public class Coordinate {
     public Coordinate(double lat, double lng) {
         this.lat = lat;
         this.lng = lng;
+    }
+
+    public Coordinate() { }
+
+    @Override
+    public String toString() {
+        return "Coordinate[" +
+                "lat=" + lat +
+                ", lng=" + lng +
+                ']';
     }
 }
