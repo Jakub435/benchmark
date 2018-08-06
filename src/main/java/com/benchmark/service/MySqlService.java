@@ -5,19 +5,24 @@ import com.benchmark.MySQL.domain.ShapeName;
 import com.benchmark.MySQL.repo.ShapeNameRepository;
 import com.benchmark.MySQL.repo.ShapeRepository;
 import com.benchmark.model.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class MySqlService {
+@Service("mainService")
+public class MySqlService{
     @Autowired
     private ShapeRepository shapeRepository;
 
     @Autowired
     private ShapeNameRepository shapeNameRepository;
+
+    public int getId(String name){
+        return shapeNameRepository.getId(name);
+    }
 
     public CoordinatePostResponse createResponseForSave(String name,CoordinateWrapper coordinate){
         List<Shape> allShape;
@@ -60,8 +65,10 @@ public class MySqlService {
 
         long before = System.currentTimeMillis();
         List<Shape> shape = shapeRepository.findAllByShapeIdOrderByPriority(shapeId);
-        List<Coordinate> coordinate = getCoordinateListFromShape(shape);
         long after = System.currentTimeMillis();
+
+        List<Coordinate> coordinate = getCoordinateListFromShape(shape);
+
         double time = (double)(after-before);
         CoordinateGetResponse response = new CoordinateGetResponse();
 

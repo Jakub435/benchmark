@@ -28,6 +28,10 @@ public class Coordinate {
 
     public Coordinate() { }
 
+    public String toPolygonString(){
+        return lat + " " + lng;
+    }
+
     @Override
     public String toString() {
         return "Coordinate[" +
