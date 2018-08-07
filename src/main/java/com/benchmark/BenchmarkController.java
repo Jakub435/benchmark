@@ -5,6 +5,7 @@ import com.benchmark.model.CoordinateGetResponse;
 import com.benchmark.model.CoordinatePostResponse;
 import com.benchmark.model.NameResponse;
 import com.benchmark.service.MySqlService;
+import com.benchmark.service.Neo4jService;
 import com.benchmark.service.PostgreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class BenchmarkController {
     @Autowired
     private PostgreService postgreService;
 
+    @Autowired
+    private Neo4jService neo4jService;
+
     @GetMapping(path = "/coordinateName")
     public @ResponseBody
     List<NameResponse> getAllName(){
@@ -36,7 +40,7 @@ public class BenchmarkController {
 
         response.setCassandra(1.2);
         response.setMongoDb(1.2);
-        response.setNeo4j(23.3);
+        response.setNeo4j(neo4jService.getReadTime(shapeName));
         response.setOrientDb(23.1);
         response.setPostGIS(postgreService.getReadTime(id));
 
@@ -46,11 +50,13 @@ public class BenchmarkController {
     @PostMapping(path = "/coordinate/{shapeName}", consumes="application/json",produces="application/json")
     public @ResponseBody
     CoordinatePostResponse postShapeCoordinate(@PathVariable String shapeName, @RequestBody CoordinateWrapper coordinate){
+        shapeName = mySqlService.checkIfExistAndReturnNewName(shapeName);
+
         CoordinatePostResponse response = mySqlService.createResponseForSave(shapeName, coordinate);
 
         response.setCassandra(1.2);
         response.setMongoDb(1.2);
-        response.setNeo4j(23.3);
+        response.setNeo4j(neo4jService.getSaveTime(shapeName, coordinate));
         response.setOrientDb(23.1);
         response.setPostGIS(postgreService.getSaveTime(shapeName, coordinate));
 

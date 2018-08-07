@@ -24,13 +24,17 @@ public class MySqlService{
         return shapeNameRepository.getId(name);
     }
 
+    public String checkIfExistAndReturnNewName(String name){
+        if(shapeNameRepository.existsByName(name)){
+            return name + System.currentTimeMillis();
+        }
+        return name;
+    }
+
     public CoordinatePostResponse createResponseForSave(String name,CoordinateWrapper coordinate){
         List<Shape> allShape;
         CoordinatePostResponse response = new CoordinatePostResponse();
 
-        if(shapeNameRepository.existsByName(name)){
-            name = name + System.currentTimeMillis();
-        }
         ShapeName shapeName = new ShapeName(name);
         int shapeId = shapeName.getId();
 

@@ -86,7 +86,13 @@
             <artifactId>geojson-jackson</artifactId>
             <version>1.8</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-neo4j</artifactId>
+            <version>5.0.9.RELEASE</version>
+        </dependency>
     </dependencies>
+
 
 	<build>
 		<plugins>
@@ -97,5 +103,14 @@
 		</plugins>
 	</build>
 
-
+    <repositories>
+        <repository>
+            <id>spring-libs-release</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/libs-release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
