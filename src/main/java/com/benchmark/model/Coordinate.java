@@ -31,12 +31,4 @@ public class Coordinate {
     public String toPolygonString(){
         return lat + " " + lng;
     }
-
-    @Override
-    public String toString() {
-        return "Coordinate[" +
-                "lat=" + lat +
-                ", lng=" + lng +
-                ']';
-    }
 }

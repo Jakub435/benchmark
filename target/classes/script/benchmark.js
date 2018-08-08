@@ -34,7 +34,7 @@ function deleteAllShape () {
         }
     }
 }
-
+//google map
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: -34.397, lng: 150.644},
@@ -55,7 +55,7 @@ function initMap() {
         },
         map: map
     });
-    
+
     google.maps.event.addListener(drawingManager, 'overlaycomplete', function (e) {
         var newShape = e.overlay;
         newShape.type = e.type;
@@ -92,7 +92,7 @@ function initMap() {
 
 }
 
-//=========================
+//chart
 
 google.charts.load('current', {'packages':['line']});
 google.charts.setOnLoadCallback(drawChart);
@@ -110,10 +110,9 @@ function drawChart() {
     data.addColumn('number', 'PostGIS');
     data.addColumn('number', 'Neo4j');
     data.addColumn('number', 'Cassandra');
-    data.addColumn('number', 'OrientDb');
     data.addColumn('number', 'MongoDb');
     data.addRows([
-      ['1',  1, 1, 1, 1, 1, 1]
+      ['1',  1, 1, 1, 1, 1]
     ]);
 
 
@@ -124,11 +123,12 @@ chart.draw(data, google.charts.Line.convertOptions(options));
 
 $(document).ready(function() {
     getPolygonNames();
+
     $("#save-coordinate-button").on("click", function(){
         if($("#shape-name").val() != ""){
             var polygonLatLng = getPolygonCoords();
             var numberOfPoint = JSON.parse(polygonLatLng).length;
-            sendCoordinateAndDisplayTimeOfSave(polygonLatLng, numberOfPoint);
+            sendCoordinateAndDisplayTimeOfSave(polygonLatLng, numberOfPoint, $("#shape-name").val());
         } else {
             $("#input-alert").css("background-color", "red")
         }
@@ -206,35 +206,37 @@ function getPolygonCoords() {
     return JSON.stringify(shapeLatLng);
 }
 
-function sendCoordinateAndDisplayTimeOfSave(shapeLatLng, numberOfPoint){
+function sendCoordinateAndDisplayTimeOfSave(shapeLatLng, numberOfPoint, shapeName){
     console.log(shapeLatLng);
-   $.ajax({//TODO: url with name: coordinate/{shapeName}
-    url: 'https://383417f1-9ce5-491b-bb4d-80de5d1a4f8d.mock.pstmn.io/coordinate/',
-    dataType: 'json',
-    type: 'post',
-    contentType: 'application/json',
-    data: shapeLatLng,
-    processData: false,
-    success: function( data, textStatus, jQxhr ){
-        console.log(data);
-        var row = prepareDataForDisplay(data, numberOfPoint);
-        displayOnSendChart(row);
-        getPolygonNames();
-    },
-    error: function( jqXhr, textStatus, errorThrown ){
-        console.log( errorThrown );
-    }
-});
+    console.log('wysyłam');
+   $.ajax({
+        url: '/coordinate/' + shapeName,
+        dataType: 'JSON',
+        type: 'POST',
+        //crossDomain: true,
+        contentType: 'application/json',
+        data: shapeLatLng,
+        processData: false,
+        success: function( data, textStatus, jQxhr ){
+            console.log(data);
+            console.log('wysłane!');
+            var row = prepareDataForDisplay(data, numberOfPoint);
+            displayOnSendChart(row);
+            getPolygonNames();
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+        }
+    });
 }
 
 function prepareDataForDisplay(saveTime, numberOfPoint){
     return [numberOfPoint.toString(),
-               parseFloat(saveTime.mySQL),
-               parseFloat(saveTime.postGIS),
-               parseFloat(saveTime.neo4j),
-               parseFloat(saveTime.cassandra),
-               parseFloat(saveTime.orientDb),
-               parseFloat(saveTime.MongoDb)];
+        saveTime.mySQL,
+        saveTime.postGIS,
+        saveTime.neo4j,
+        saveTime.cassandra,
+        saveTime.MongoDb];
 }
 
 function displayOnSendChart(row){
@@ -272,6 +274,5 @@ function setUpColums(data){
     data.addColumn('number', 'PostGIS');
     data.addColumn('number', 'Neo4j');
     data.addColumn('number', 'Cassandra');
-    data.addColumn('number', 'OrientDb');
     data.addColumn('number', 'MongoDb');
 }

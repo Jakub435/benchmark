@@ -31,7 +31,7 @@ public class MySqlService{
         return name;
     }
 
-    public CoordinatePostResponse createResponseForSave(String name,CoordinateWrapper coordinate){
+    public CoordinatePostResponse getSaveTime(String name,CoordinateWrapper coordinate){
         List<Shape> allShape;
         CoordinatePostResponse response = new CoordinatePostResponse();
 
@@ -64,35 +64,15 @@ public class MySqlService{
         return list;
     }
 
-    public CoordinateGetResponse createResponseForRead(String shapeName){
+    public double getReadTime(String shapeName){
         int shapeId = shapeNameRepository.getId(shapeName);
 
         long before = System.currentTimeMillis();
-        List<Shape> shape = shapeRepository.findAllByShapeIdOrderByPriority(shapeId);
+        shapeRepository.findAllByShapeIdOrderByPriority(shapeId);
         long after = System.currentTimeMillis();
-
-        List<Coordinate> coordinate = getCoordinateListFromShape(shape);
-
         double time = (double)(after-before);
-        CoordinateGetResponse response = new CoordinateGetResponse();
 
-        response.setCoordinates(coordinate);
-        response.setMySQL(time);
-
-        return response;
-    }
-
-    private List<Coordinate> getCoordinateListFromShape(List<Shape> list){
-        List<Coordinate> coordinate = new ArrayList<>();
-
-        for (Shape singleShape: list){
-            double lat = singleShape.getLat();
-            double lng = singleShape.getLng();
-
-            coordinate.add(new Coordinate(lat,lng));
-        }
-
-        return coordinate;
+        return time;
     }
 
     public List<NameResponse> getAllName(){

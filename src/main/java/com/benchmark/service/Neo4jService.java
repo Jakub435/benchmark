@@ -2,6 +2,7 @@ package com.benchmark.service;
 
 import com.benchmark.Neo4j.domain.Neo4jShape;
 import com.benchmark.Neo4j.domain.ShapeNeo;
+import com.benchmark.Neo4j.repo.Neo4jCoordRepo;
 import com.benchmark.Neo4j.repo.Neo4jRepo;
 import com.benchmark.model.CoordinateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,13 @@ import java.util.List;
 public class Neo4jService {
     @Autowired
     private Neo4jRepo neo4jRepo;
+    @Autowired
+    private Neo4jCoordRepo neo4jCoordRepo;
 
+    public void clear(){
+        neo4jRepo.deleteAll();
+        neo4jCoordRepo.deleteAll();
+    }
 
     public double getSaveTime(String name, CoordinateWrapper coordinates){
         Neo4jShape neo4jShape = new Neo4jShape();

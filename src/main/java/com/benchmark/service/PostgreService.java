@@ -52,9 +52,9 @@ public class PostgreService {
         return (MultiPoint)wktReader.read(wktString);
     }
 
-    public double getReadTime(int id){
+    public double getReadTime(String name){
         long before = System.currentTimeMillis();
-        postgreRepository.findById(id);
+        postgreRepository.findFirstByName(name);
         long after = System.currentTimeMillis();
         double time = (double)(after-before);
         return time;

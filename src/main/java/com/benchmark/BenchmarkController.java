@@ -4,6 +4,7 @@ import com.benchmark.model.CoordinateWrapper;
 import com.benchmark.model.CoordinateGetResponse;
 import com.benchmark.model.CoordinatePostResponse;
 import com.benchmark.model.NameResponse;
+import com.benchmark.service.MongoService;
 import com.benchmark.service.MySqlService;
 import com.benchmark.service.Neo4jService;
 import com.benchmark.service.PostgreService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 
@@ -25,6 +27,15 @@ public class BenchmarkController {
     @Autowired
     private Neo4jService neo4jService;
 
+    @Autowired
+    private MongoService mongoService;
+
+    @PostConstruct
+    public void clearAllNoSqlDb(){
+        neo4jService.clear();
+        mongoService.clear();
+    }
+
     @GetMapping(path = "/coordinateName")
     public @ResponseBody
     List<NameResponse> getAllName(){
@@ -34,15 +45,12 @@ public class BenchmarkController {
     @GetMapping(path = "/coordinate/{shapeName}")
     public @ResponseBody
     CoordinateGetResponse getShapeCoordinate(@PathVariable String shapeName)  {
-        CoordinateGetResponse response = mySqlService.createResponseForRead(shapeName);
-
-        int id = mySqlService.getId(shapeName);
+        CoordinateGetResponse response = mongoService.getReadTime(shapeName);
 
         response.setCassandra(1.2);
-        response.setMongoDb(1.2);
+        response.setMySQL(mySqlService.getReadTime(shapeName));
         response.setNeo4j(neo4jService.getReadTime(shapeName));
-        response.setOrientDb(23.1);
-        response.setPostGIS(postgreService.getReadTime(id));
+        response.setPostGIS(postgreService.getReadTime(shapeName));
 
         return response;
     }
@@ -52,12 +60,11 @@ public class BenchmarkController {
     CoordinatePostResponse postShapeCoordinate(@PathVariable String shapeName, @RequestBody CoordinateWrapper coordinate){
         shapeName = mySqlService.checkIfExistAndReturnNewName(shapeName);
 
-        CoordinatePostResponse response = mySqlService.createResponseForSave(shapeName, coordinate);
+        CoordinatePostResponse response = mySqlService.getSaveTime(shapeName, coordinate);
 
         response.setCassandra(1.2);
-        response.setMongoDb(1.2);
+        response.setMongoDb(mongoService.getSaveTime(shapeName, coordinate));
         response.setNeo4j(neo4jService.getSaveTime(shapeName, coordinate));
-        response.setOrientDb(23.1);
         response.setPostGIS(postgreService.getSaveTime(shapeName, coordinate));
 
         return response;

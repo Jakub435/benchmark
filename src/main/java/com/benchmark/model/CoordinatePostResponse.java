@@ -5,7 +5,6 @@ public class CoordinatePostResponse {
     private double postGIS;
     private double neo4j;
     private double cassandra;
-    private double orientDb;
     private double MongoDb;
 
     public double getMySQL() {
@@ -38,14 +37,6 @@ public class CoordinatePostResponse {
 
     public void setCassandra(double cassandra) {
         this.cassandra = cassandra;
-    }
-
-    public double getOrientDb() {
-        return orientDb;
-    }
-
-    public void setOrientDb(double orientDb) {
-        this.orientDb = orientDb;
     }
 
     public double getMongoDb() {
