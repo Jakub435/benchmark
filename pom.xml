@@ -93,7 +93,6 @@
         </dependency>
     </dependencies>
 
-
 	<build>
 		<plugins>
 			<plugin>
@@ -104,6 +103,14 @@
 	</build>
 
     <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
         <repository>
             <id>spring-libs-release</id>
             <name>Spring Releases</name>

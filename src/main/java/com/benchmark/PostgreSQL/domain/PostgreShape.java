@@ -1,8 +1,6 @@
 package com.benchmark.PostgreSQL.domain;
 
-import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.Polygon;
 
 import javax.persistence.*;
 

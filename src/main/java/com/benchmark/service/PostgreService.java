@@ -15,9 +15,9 @@ public class PostgreService {
     PostgreRepository postgreRepository;
 
     public double getSaveTime(String name, CoordinateWrapper coordinates){
-
         PostgreShape postgreShape = new PostgreShape();
         postgreShape.setName(name);
+
         try {
             postgreShape.setMultiPoint(prepareMultiPoint(coordinates));
         }catch (Exception e){}

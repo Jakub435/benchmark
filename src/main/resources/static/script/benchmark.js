@@ -37,8 +37,8 @@ function deleteAllShape () {
 //google map
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 8
+      center: {lat: 52.5, lng: 19.2},
+      zoom: 6
     });
 
     drawingManager = new google.maps.drawing.DrawingManager({
@@ -109,10 +109,9 @@ function drawChart() {
     data.addColumn('number', 'MySQL');
     data.addColumn('number', 'PostGIS');
     data.addColumn('number', 'Neo4j');
-    data.addColumn('number', 'Cassandra');
     data.addColumn('number', 'MongoDb');
     data.addRows([
-      ['1',  1, 1, 1, 1, 1]
+      ['1',  1, 1, 1, 1]
     ]);
 
 
@@ -154,11 +153,10 @@ $(document).ready(function() {
 });
 function getCoordinateFromServer(shapeName){
     $.ajax({
-          type:'get',//TODO: url with shapeName: coordinate/{shapeName}
-          url:'https://383417f1-9ce5-491b-bb4d-80de5d1a4f8d.mock.pstmn.io/coordinate/',
+          type:'get',
+          url:'http://localhost:8080/coordinate/'+shapeName,
           dataType:'json',
           success:function(data){
-              console.log(data);
               var numberOfPoint = data.coordinates.length;
               var row = prepareDataForDisplay(data,numberOfPoint);
               dislayOnReceiveChart(row);
@@ -207,19 +205,17 @@ function getPolygonCoords() {
 }
 
 function sendCoordinateAndDisplayTimeOfSave(shapeLatLng, numberOfPoint, shapeName){
+    console.log("wysłane wpolrzedne:")
     console.log(shapeLatLng);
-    console.log('wysyłam');
    $.ajax({
-        url: '/coordinate/' + shapeName,
+        url: 'http://localhost:8080/coordinate/' + shapeName,
         dataType: 'JSON',
         type: 'POST',
-        //crossDomain: true,
+        crossDomain: true,
         contentType: 'application/json',
         data: shapeLatLng,
         processData: false,
-        success: function( data, textStatus, jQxhr ){
-            console.log(data);
-            console.log('wysłane!');
+        success: function( data){
             var row = prepareDataForDisplay(data, numberOfPoint);
             displayOnSendChart(row);
             getPolygonNames();
@@ -235,8 +231,7 @@ function prepareDataForDisplay(saveTime, numberOfPoint){
         saveTime.mySQL,
         saveTime.postGIS,
         saveTime.neo4j,
-        saveTime.cassandra,
-        saveTime.MongoDb];
+        saveTime.mongoDb];
 }
 
 function displayOnSendChart(row){
@@ -256,11 +251,9 @@ function refreshChart(chartData){
 function getPolygonNames(){
     $.ajax({
           type:'get',
-          url:'https://383417f1-9ce5-491b-bb4d-80de5d1a4f8d.mock.pstmn.io/coordinateName',
+          url:'http://localhost:8080/coordinateName',
           dataType:'json',
           success:function(data){
-              console.log("nazwy:");
-              console.log(data);
               $.each(data, function(k, obj){
                   $("#selected-coordinate").append( $('<option>', { text: obj.name }));
               });
@@ -273,6 +266,5 @@ function setUpColums(data){
     data.addColumn('number', 'MySQL');
     data.addColumn('number', 'PostGIS');
     data.addColumn('number', 'Neo4j');
-    data.addColumn('number', 'Cassandra');
     data.addColumn('number', 'MongoDb');
 }

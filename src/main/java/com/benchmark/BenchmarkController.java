@@ -1,9 +1,6 @@
 package com.benchmark;
 
-import com.benchmark.model.CoordinateWrapper;
-import com.benchmark.model.CoordinateGetResponse;
-import com.benchmark.model.CoordinatePostResponse;
-import com.benchmark.model.NameResponse;
+import com.benchmark.model.*;
 import com.benchmark.service.MongoService;
 import com.benchmark.service.MySqlService;
 import com.benchmark.service.Neo4jService;
@@ -47,7 +44,6 @@ public class BenchmarkController {
     CoordinateGetResponse getShapeCoordinate(@PathVariable String shapeName)  {
         CoordinateGetResponse response = mongoService.getReadTime(shapeName);
 
-        response.setCassandra(1.2);
         response.setMySQL(mySqlService.getReadTime(shapeName));
         response.setNeo4j(neo4jService.getReadTime(shapeName));
         response.setPostGIS(postgreService.getReadTime(shapeName));
@@ -62,7 +58,6 @@ public class BenchmarkController {
 
         CoordinatePostResponse response = mySqlService.getSaveTime(shapeName, coordinate);
 
-        response.setCassandra(1.2);
         response.setMongoDb(mongoService.getSaveTime(shapeName, coordinate));
         response.setNeo4j(neo4jService.getSaveTime(shapeName, coordinate));
         response.setPostGIS(postgreService.getSaveTime(shapeName, coordinate));
