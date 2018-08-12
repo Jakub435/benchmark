@@ -145,11 +145,30 @@ $(document).ready(function() {
     $("#disp-send-result").click(function(){
         refreshChart(sendChartData);
     });
+
     $("#disp-receive-result").click(function(){
         refreshChart(receiveChartData);
     });
     
-    
+    $("#generate").click(function () {
+       var numberOfPoints = $("#generate_value").val();
+       var numberGeneratePoint = numberOfPoints - 1;
+       var startLat = 51;
+       var lng = 18;
+       var shapeLatLng = [];
+       for (var i = 0; i<numberGeneratePoint; i++){
+           shapeLatLng.push({
+               lat: startLat,
+               lng: lng
+           });
+           startLat = startLat + 0.001;
+       }
+        shapeLatLng.push({
+            lat: 51,
+            lng: 19
+        });
+       sendCoordinateAndDisplayTimeOfSave(JSON.stringify(shapeLatLng), numberOfPoints, numberOfPoints + "_GENERATE");
+    });
 });
 function getCoordinateFromServer(shapeName){
     $.ajax({

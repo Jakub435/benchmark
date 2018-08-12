@@ -7,11 +7,13 @@ import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service("postgresqlService")
 public class PostgreService {
     @Autowired
+    @Qualifier(value = "postgresqlRepositry")
     PostgreRepository postgreRepository;
 
     public double getSaveTime(String name, CoordinateWrapper coordinates){

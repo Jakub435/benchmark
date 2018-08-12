@@ -7,6 +7,7 @@ import com.benchmark.MySQL.repo.ShapeRepository;
 import com.benchmark.model.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 @Service("mainService")
 public class MySqlService{
     @Autowired
+    @Qualifier(value = "mainRepository")
     private ShapeRepository shapeRepository;
 
     @Autowired

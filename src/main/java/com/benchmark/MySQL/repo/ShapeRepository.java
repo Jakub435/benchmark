@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
-@Repository
+@Repository("mainRepository")
 public interface ShapeRepository extends JpaRepository<Shape, Long> {
     List<Shape> findAllByShapeIdOrderByPriority(int shapeId);
 }

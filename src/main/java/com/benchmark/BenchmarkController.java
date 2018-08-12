@@ -6,6 +6,7 @@ import com.benchmark.service.MySqlService;
 import com.benchmark.service.Neo4jService;
 import com.benchmark.service.PostgreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,11 @@ import java.util.List;
 @Controller
 public class BenchmarkController {
     @Autowired
+    @Qualifier(value = "mainService")
     private MySqlService mySqlService;
 
     @Autowired
+    @Qualifier(value = "postgresqlService")
     private PostgreService postgreService;
 
     @Autowired
