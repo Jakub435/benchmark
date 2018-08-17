@@ -31,7 +31,7 @@ public class BenchmarkController {
     private MongoService mongoService;
 
     @PostConstruct
-    public void clearAllNoSqlDb(){
+    public void clearAll(){
         neo4jService.clear();
         mongoService.clear();
     }
@@ -47,6 +47,7 @@ public class BenchmarkController {
     CoordinateGetResponse getShapeCoordinate(@PathVariable String shapeName)  {
         CoordinateGetResponse response = mongoService.getReadTime(shapeName);
 
+        response.setMongoSpatial(mongoService.getSpatialReadTime(shapeName));
         response.setMySQL(mySqlService.getReadTime(shapeName));
         response.setNeo4j(neo4jService.getReadTime(shapeName));
         response.setPostGIS(postgreService.getReadTime(shapeName));
@@ -62,6 +63,7 @@ public class BenchmarkController {
         CoordinatePostResponse response = mySqlService.getSaveTime(shapeName, coordinate);
 
         response.setMongoDb(mongoService.getSaveTime(shapeName, coordinate));
+        response.setMongoSpatial(mongoService.getSpatialSaveTime(shapeName, coordinate));
         response.setNeo4j(neo4jService.getSaveTime(shapeName, coordinate));
         response.setPostGIS(postgreService.getSaveTime(shapeName, coordinate));
 

@@ -14,8 +14,6 @@ services:
             - "3306:3306"
         environment:
             MYSQL_DATABASE: "bench"
-            MYSQL_USER: "user"
-            MYSQL_PASSWORD: "pass"
             MYSQL_ROOT_PASSWORD: "pass"
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     postgis:
@@ -28,9 +26,9 @@ services:
             POSTGRES_USER: user
             POSTGRES_DB: bench
     neo4j:
-        image: neo4j:latest
+        build: 
+            context: ./neo4j
+            dockerfile: Dockerfile.yml
         ports:
             - "7474:7474"
             - "7687:7687"
-        environment:
-            NEO4J_AUTH: "none"

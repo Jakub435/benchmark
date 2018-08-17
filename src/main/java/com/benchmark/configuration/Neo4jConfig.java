@@ -14,13 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan("com.benchmark.Neo4j")
 @EnableNeo4jRepositories("com.benchmark.Neo4j.repo")
 public class Neo4jConfig {
-/*
-    @Value(value = "${neo4j.username}")
-    private String username;
 
-    @Value(value = "${neo4j.password}")
-    private String pass;
-*/
     @Value(value = "${neo4j.uri}")
     private String uri;
 
@@ -38,7 +32,6 @@ public class Neo4jConfig {
     public org.neo4j.ogm.config.Configuration configuration() {
         return new org.neo4j.ogm.config.Configuration.Builder()
                 .uri(uri)
-                //.credentials(username, pass)
                 .build();
     }
 }

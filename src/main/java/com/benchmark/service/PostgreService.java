@@ -16,6 +16,10 @@ public class PostgreService {
     @Qualifier(value = "postgresqlRepositry")
     PostgreRepository postgreRepository;
 
+    public void clear(){
+        postgreRepository.deleteAll();
+    }
+
     public double getSaveTime(String name, CoordinateWrapper coordinates){
         PostgreShape postgreShape = new PostgreShape();
         postgreShape.setName(name);

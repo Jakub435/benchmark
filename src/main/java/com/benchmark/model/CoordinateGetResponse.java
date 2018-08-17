@@ -7,7 +7,16 @@ public class CoordinateGetResponse {
     private double postGIS;
     private double neo4j;
     private double MongoDb;
+    private double mongoSpatial;
     private List<Coordinate> coordinates;
+
+    public double getMongoSpatial() {
+        return mongoSpatial;
+    }
+
+    public void setMongoSpatial(double mongoSpatial) {
+        this.mongoSpatial = mongoSpatial;
+    }
 
     public double getMySQL() {
         return mySQL;

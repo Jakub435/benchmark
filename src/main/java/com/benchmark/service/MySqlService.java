@@ -26,6 +26,11 @@ public class MySqlService{
         return shapeNameRepository.getId(name);
     }
 
+    public void clear(){
+        shapeNameRepository.deleteAll();
+        shapeRepository.deleteAll();
+    }
+
     public String checkIfExistAndReturnNewName(String name){
         if(shapeNameRepository.existsByName(name)){
             return name + System.currentTimeMillis();

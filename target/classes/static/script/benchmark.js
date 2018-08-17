@@ -110,8 +110,9 @@ function drawChart() {
     data.addColumn('number', 'PostGIS');
     data.addColumn('number', 'Neo4j');
     data.addColumn('number', 'MongoDb');
+    data.addColumn('number', 'Mongo_Spatial');
     data.addRows([
-      ['1',  1, 1, 1, 1]
+      ['1',  1, 1, 1, 1, 1]
     ]);
 
 
@@ -250,7 +251,8 @@ function prepareDataForDisplay(saveTime, numberOfPoint){
         saveTime.mySQL,
         saveTime.postGIS,
         saveTime.neo4j,
-        saveTime.mongoDb];
+        saveTime.mongoDb,
+        saveTime.mongoSpatial];
 }
 
 function displayOnSendChart(row){
@@ -273,6 +275,7 @@ function getPolygonNames(){
           url:'http://localhost:8080/coordinateName',
           dataType:'json',
           success:function(data){
+              $("#selected-coordinate").empty();
               $.each(data, function(k, obj){
                   $("#selected-coordinate").append( $('<option>', { text: obj.name }));
               });
@@ -286,4 +289,5 @@ function setUpColums(data){
     data.addColumn('number', 'PostGIS');
     data.addColumn('number', 'Neo4j');
     data.addColumn('number', 'MongoDb');
+    data.addColumn('number', 'Mongo_Spatial');
 }
