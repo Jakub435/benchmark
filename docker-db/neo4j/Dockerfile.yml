@@ -3,3 +3,4 @@ ADD ./spatial/neo4j-spatial-0.25.6-neo4j-3.4.5-server-plugin.jar /var/lib/neo4j/
 ENV NEO4J_AUTH none
 EXPOSE 7474
 EXPOSE 7687
+CMD curl
