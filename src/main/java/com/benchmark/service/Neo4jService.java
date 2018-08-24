@@ -19,11 +19,6 @@ public class Neo4jService {
     @Autowired
     private Neo4jCoordRepo neo4jCoordRepo;
 
-    public void clear(){
-        neo4jRepo.deleteAll();
-        neo4jCoordRepo.deleteAll();
-    }
-
     public double getSaveTime(String name, CoordinateWrapper coordinates){
         Neo4jShape neo4jShape = new Neo4jShape();
         neo4jShape.setName(name);

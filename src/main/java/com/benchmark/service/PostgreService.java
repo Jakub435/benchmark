@@ -1,5 +1,6 @@
 package com.benchmark.service;
 
+import com.benchmark.CoordinateToMultiPoint;
 import com.benchmark.PostgreSQL.domain.PostgreShape;
 import com.benchmark.PostgreSQL.repo.PostgreRepository;
 import com.benchmark.model.CoordinateWrapper;
@@ -39,21 +40,8 @@ public class PostgreService {
     private MultiPoint prepareMultiPoint(CoordinateWrapper coordinates) throws ParseException {
         WKTReader wktReader = new WKTReader();
 
-        String wktString = "MULTIPOINT (";
-
-        int size = coordinates.size();
-        for(int i = 0; i < size; i++){
-            String lat = Double.toString(coordinates.get(i).getLat());
-            String lng = Double.toString(coordinates.get(i).getLng());
-
-            if(i<size-1) {
-                wktString += lat + " " + lng + ", ";
-            } else {
-                wktString += lat + " " + lng + ")";
-            }
-
-
-        }
+        CoordinateToMultiPoint coordinateToMultiPoint = new CoordinateToMultiPoint();
+        String wktString = coordinateToMultiPoint.getWKTMultiPoint(coordinates);
 
         return (MultiPoint)wktReader.read(wktString);
     }

@@ -4,8 +4,17 @@ public class CoordinatePostResponse {
     private double mySQL;
     private double postGIS;
     private double neo4j;
+    private double neo4jSpatial;
     private double MongoDb;
     private double mongoSpatial;
+
+    public double getNeo4jSpatial() {
+        return neo4jSpatial;
+    }
+
+    public void setNeo4jSpatial(double neo4jSpatial) {
+        this.neo4jSpatial = neo4jSpatial;
+    }
 
     public double getMongoSpatial() {
         return mongoSpatial;

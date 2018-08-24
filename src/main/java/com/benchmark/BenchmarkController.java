@@ -1,5 +1,6 @@
 package com.benchmark;
 
+import com.benchmark.Neo4jSpatial.Neo4jSpatial;
 import com.benchmark.model.*;
 import com.benchmark.service.MongoService;
 import com.benchmark.service.MySqlService;
@@ -30,9 +31,11 @@ public class BenchmarkController {
     @Autowired
     private MongoService mongoService;
 
+    private Neo4jSpatial neo4jSpatial = new Neo4jSpatial();
+
     @PostConstruct
     public void clearAll(){
-        neo4jService.clear();
+        neo4jSpatial.deleteAndCreateMultiPointLayer();
         mongoService.clear();
     }
 
@@ -50,6 +53,7 @@ public class BenchmarkController {
         response.setMongoSpatial(mongoService.getSpatialReadTime(shapeName));
         response.setMySQL(mySqlService.getReadTime(shapeName));
         response.setNeo4j(neo4jService.getReadTime(shapeName));
+        response.setNeo4jSpatial(neo4jSpatial.getReadTime(shapeName));
         response.setPostGIS(postgreService.getReadTime(shapeName));
 
         return response;
@@ -65,6 +69,7 @@ public class BenchmarkController {
         response.setMongoDb(mongoService.getSaveTime(shapeName, coordinate));
         response.setMongoSpatial(mongoService.getSpatialSaveTime(shapeName, coordinate));
         response.setNeo4j(neo4jService.getSaveTime(shapeName, coordinate));
+        response.setNeo4jSpatial(neo4jSpatial.getSaveTime(shapeName, coordinate));
         response.setPostGIS(postgreService.getSaveTime(shapeName, coordinate));
 
         return response;

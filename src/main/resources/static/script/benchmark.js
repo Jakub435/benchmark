@@ -109,10 +109,11 @@ function drawChart() {
     data.addColumn('number', 'MySQL');
     data.addColumn('number', 'PostGIS');
     data.addColumn('number', 'Neo4j');
+    data.addColumn('number', 'Neo4jSpatial');
     data.addColumn('number', 'MongoDb');
     data.addColumn('number', 'Mongo_Spatial');
     data.addRows([
-      ['1',  1, 1, 1, 1, 1]
+      ['1',  1, 1, 1, 1, 1, 1]
     ]);
 
 
@@ -251,6 +252,7 @@ function prepareDataForDisplay(saveTime, numberOfPoint){
         saveTime.mySQL,
         saveTime.postGIS,
         saveTime.neo4j,
+        saveTime.neo4jSpatial,
         saveTime.mongoDb,
         saveTime.mongoSpatial];
 }
@@ -288,6 +290,7 @@ function setUpColums(data){
     data.addColumn('number', 'MySQL');
     data.addColumn('number', 'PostGIS');
     data.addColumn('number', 'Neo4j');
+    data.addColumn('number', 'Neo4jSpatial');
     data.addColumn('number', 'MongoDb');
     data.addColumn('number', 'Mongo_Spatial');
 }
