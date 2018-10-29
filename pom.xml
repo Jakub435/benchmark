@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.4.RELEASE</version>
+		<version>2.1.0.M1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -83,9 +83,13 @@
             <version>1.8</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-neo4j</artifactId>
-            <version>5.0.9.RELEASE</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-neo4j</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-bolt-driver-->
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-bolt-driver</artifactId>
         </dependency>
         <dependency>
             <groupId>org.neo4j</groupId>
