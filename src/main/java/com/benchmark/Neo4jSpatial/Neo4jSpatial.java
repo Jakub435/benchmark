@@ -8,7 +8,7 @@ public class Neo4jSpatial implements AutoCloseable{
     private final Driver driver;
 
     public Neo4jSpatial(){
-        driver = GraphDatabase.driver("bolt://192.168.99.100:7687");
+        driver = GraphDatabase.driver("bolt://localhost:7687");
     }
 
     public void deleteAndCreateMultiPointLayer(){

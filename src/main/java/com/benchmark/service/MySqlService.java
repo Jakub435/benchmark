@@ -20,6 +20,7 @@ public class MySqlService{
     private ShapeRepository shapeRepository;
 
     @Autowired
+    @Qualifier(value = "mainShapeNameRepository")
     private ShapeNameRepository shapeNameRepository;
 
     public int getId(String name){
