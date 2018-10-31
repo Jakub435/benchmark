@@ -1,20 +1,23 @@
 package com.benchmark.mongoDb.domain;
 
-import com.benchmark.model.CoordinateWrapper;
-
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "shape")
-public class MongoShape {
-
+@Document(collection = "spatial_Polygon")
+public class MongoSpatialPolygon {
     @BsonId
     private ObjectId id;
-
     private String name;
+    private GeoJsonPolygon polygon;
 
-    private CoordinateWrapper coordinates;
+    public MongoSpatialPolygon(String name, GeoJsonPolygon polygon) {
+        this.name = name;
+        this.polygon = polygon;
+    }
+
+    public MongoSpatialPolygon() {}
 
     public ObjectId getId() {
         return id;
@@ -24,12 +27,6 @@ public class MongoShape {
         this.id = id;
     }
 
-    public MongoShape(String name, CoordinateWrapper coordinates) {
-        this.name = name;
-        this.coordinates = coordinates;
-    }
-    public MongoShape(){}
-
     public String getName() {
         return name;
     }
@@ -38,11 +35,11 @@ public class MongoShape {
         this.name = name;
     }
 
-    public CoordinateWrapper getCoordinates() {
-        return coordinates;
+    public GeoJsonPolygon getPolygon() {
+        return polygon;
     }
 
-    public void setCoordinates(CoordinateWrapper coordinates) {
-        this.coordinates = coordinates;
+    public void setPolygon(GeoJsonPolygon polygon) {
+        this.polygon = polygon;
     }
 }

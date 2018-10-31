@@ -1,52 +1,19 @@
 package com.benchmark.model;
 
 public class CoordinatePostResponse {
-    private double mySQL;
-    private double postGIS;
-    private double neo4j;
-    private double neo4jSpatial;
     private double MongoDb;
-    private double mongoSpatial;
+    private double mongoSpatialMultiPoint;
+    private double mongoSpatialPolygon;
+    private double mongoSpatialLineString;
 
-    public double getNeo4jSpatial() {
-        return neo4jSpatial;
+    public CoordinatePostResponse(double mongoDb, double mongoSpatialMultiPoint, double mongoSpatialPolygon, double mongoSpatialLineString) {
+        MongoDb = mongoDb;
+        this.mongoSpatialMultiPoint = mongoSpatialMultiPoint;
+        this.mongoSpatialPolygon = mongoSpatialPolygon;
+        this.mongoSpatialLineString = mongoSpatialLineString;
     }
 
-    public void setNeo4jSpatial(double neo4jSpatial) {
-        this.neo4jSpatial = neo4jSpatial;
-    }
-
-    public double getMongoSpatial() {
-        return mongoSpatial;
-    }
-
-    public void setMongoSpatial(double mongoSpatial) {
-        this.mongoSpatial = mongoSpatial;
-    }
-
-    public double getMySQL() {
-        return mySQL;
-    }
-
-    public void setMySQL(double mySQL) {
-        this.mySQL = mySQL;
-    }
-
-    public double getPostGIS() {
-        return postGIS;
-    }
-
-    public void setPostGIS(double postGIS) {
-        this.postGIS = postGIS;
-    }
-
-    public double getNeo4j() {
-        return neo4j;
-    }
-
-    public void setNeo4j(double neo4j) {
-        this.neo4j = neo4j;
-    }
+    public CoordinatePostResponse(){}
 
     public double getMongoDb() {
         return MongoDb;
@@ -54,5 +21,29 @@ public class CoordinatePostResponse {
 
     public void setMongoDb(double mongoDb) {
         MongoDb = mongoDb;
+    }
+
+    public double getMongoSpatialMultiPoint() {
+        return mongoSpatialMultiPoint;
+    }
+
+    public void setMongoSpatialMultiPoint(double mongoSpatialMultiPoint) {
+        this.mongoSpatialMultiPoint = mongoSpatialMultiPoint;
+    }
+
+    public double getMongoSpatialPolygon() {
+        return mongoSpatialPolygon;
+    }
+
+    public void setMongoSpatialPolygon(double mongoSpatialPolygon) {
+        this.mongoSpatialPolygon = mongoSpatialPolygon;
+    }
+
+    public double getMongoSpatialLineString() {
+        return mongoSpatialLineString;
+    }
+
+    public void setMongoSpatialLineString(double mongoSpatialLineString) {
+        this.mongoSpatialLineString = mongoSpatialLineString;
     }
 }

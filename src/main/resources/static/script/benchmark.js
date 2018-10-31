@@ -104,16 +104,14 @@ function drawChart() {
     receiveChartData = new google.visualization.DataTable();
     setUpColums(sendChartData);
     setUpColums(receiveChartData);
+    receiveChartData.addColumn('number','BasicObjMultiPoint');
     
     data.addColumn('string', 'punkty');
-    data.addColumn('number', 'MySQL');
-    data.addColumn('number', 'PostGIS');
-    data.addColumn('number', 'Neo4j');
-    data.addColumn('number', 'Neo4jSpatial');
-    data.addColumn('number', 'MongoDb');
-    data.addColumn('number', 'Mongo_Spatial');
+    data.addColumn('number', 'MultiPoint');
+    data.addColumn('number', 'LineString');
+    data.addColumn('number', 'Polygon');
     data.addRows([
-      ['1',  1, 1, 1, 1, 1, 1]
+      ['1',  1, 1, 1]
     ]);
 
 
@@ -248,13 +246,18 @@ function sendCoordinateAndDisplayTimeOfSave(shapeLatLng, numberOfPoint, shapeNam
 }
 
 function prepareDataForDisplay(saveTime, numberOfPoint){
+    if(saveTime.basicObjectMultiPoint != undefined){
+        return [numberOfPoint.toString(),
+            saveTime.mongoSpatialMultiPoint,
+            saveTime.mongoSpatialLineString,
+            saveTime.mongoSpatialPolygon,
+            saveTime.basicObjectMultiPoint];
+    }
     return [numberOfPoint.toString(),
-        saveTime.mySQL,
-        saveTime.postGIS,
-        saveTime.neo4j,
-        saveTime.neo4jSpatial,
-        saveTime.mongoDb,
-        saveTime.mongoSpatial];
+        saveTime.mongoSpatialMultiPoint,
+        saveTime.mongoSpatialLineString,
+        saveTime.mongoSpatialPolygon];
+
 }
 
 function displayOnSendChart(row){
@@ -287,10 +290,7 @@ function getPolygonNames(){
 
 function setUpColums(data){
     data.addColumn('string', 'punkty');
-    data.addColumn('number', 'MySQL');
-    data.addColumn('number', 'PostGIS');
-    data.addColumn('number', 'Neo4j');
-    data.addColumn('number', 'Neo4jSpatial');
-    data.addColumn('number', 'MongoDb');
-    data.addColumn('number', 'Mongo_Spatial');
+    data.addColumn('number', 'MultiPoint');
+    data.addColumn('number', 'LineString');
+    data.addColumn('number', 'Polygon');
 }

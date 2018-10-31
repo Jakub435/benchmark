@@ -1,13 +1,10 @@
 package com.benchmark;
 
-import com.benchmark.Neo4jSpatial.Neo4jSpatial;
+
 import com.benchmark.model.*;
+import com.benchmark.service.MongoBasicObjectService;
 import com.benchmark.service.MongoService;
-import com.benchmark.service.MySqlService;
-import com.benchmark.service.Neo4jService;
-import com.benchmark.service.PostgreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,31 +15,19 @@ import java.util.List;
 @Controller
 public class BenchmarkController {
     @Autowired
-    @Qualifier(value = "mainService")
-    private MySqlService mySqlService;
-
-    @Autowired
-    @Qualifier(value = "postgresqlService")
-    private PostgreService postgreService;
-
-    @Autowired
-    private Neo4jService neo4jService;
-
-    @Autowired
     private MongoService mongoService;
 
-    private Neo4jSpatial neo4jSpatial = new Neo4jSpatial();
+    private MongoBasicObjectService mongoDriverService = new MongoBasicObjectService();
 
     @PostConstruct
     public void clearAll(){
-        neo4jSpatial.deleteAndCreateMultiPointLayer();
         mongoService.clear();
     }
 
     @GetMapping(path = "/coordinateName")
     public @ResponseBody
     List<NameResponse> getAllName(){
-        return mySqlService.getAllName();
+        return mongoService.getAllName();
     }
 
     @GetMapping(path = "/coordinate/{shapeName}")
@@ -50,27 +35,25 @@ public class BenchmarkController {
     CoordinateGetResponse getShapeCoordinate(@PathVariable String shapeName)  {
         CoordinateGetResponse response = mongoService.getReadTime(shapeName);
 
-        response.setMongoSpatial(mongoService.getSpatialReadTime(shapeName));
-        response.setMySQL(mySqlService.getReadTime(shapeName));
-        response.setNeo4j(neo4jService.getReadTime(shapeName));
-        response.setNeo4jSpatial(neo4jSpatial.getReadTime(shapeName));
-        response.setPostGIS(postgreService.getReadTime(shapeName));
+        response.setMongoSpatialMultiPoint(mongoService.getSpatialMultiPointReadTime(shapeName));
+        response.setMongoSpatialPolygon(mongoService.getSpatialPolygonReadTime(shapeName));
+        response.setMongoSpatialLineString(mongoService.getSpatialLineStringReadTime(shapeName));
+        response.setBasicObjectMultiPoint(mongoDriverService.getMultiPointReadTime(shapeName));
 
         return response;
     }
 
+
     @PostMapping(path = "/coordinate/{shapeName}", consumes="application/json",produces="application/json")
     public @ResponseBody
     CoordinatePostResponse postShapeCoordinate(@PathVariable String shapeName, @RequestBody CoordinateWrapper coordinate){
-        shapeName = mySqlService.checkIfExistAndReturnNewName(shapeName);
-
-        CoordinatePostResponse response = mySqlService.getSaveTime(shapeName, coordinate);
+        shapeName = mongoService.checkIfExistAndReturnNewName(shapeName);
+        CoordinatePostResponse response = new CoordinatePostResponse();
 
         response.setMongoDb(mongoService.getSaveTime(shapeName, coordinate));
-        response.setMongoSpatial(mongoService.getSpatialSaveTime(shapeName, coordinate));
-        response.setNeo4j(neo4jService.getSaveTime(shapeName, coordinate));
-        response.setNeo4jSpatial(neo4jSpatial.getSaveTime(shapeName, coordinate));
-        response.setPostGIS(postgreService.getSaveTime(shapeName, coordinate));
+        response.setMongoSpatialMultiPoint(mongoService.getMultiPointSaveTime(shapeName, coordinate));
+        response.setMongoSpatialLineString(mongoService.getLineStringSaveTime(shapeName, coordinate));
+        response.setMongoSpatialPolygon(mongoService.getPolygonSaveTime(shapeName, coordinate));
 
         return response;
     }

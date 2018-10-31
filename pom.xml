@@ -31,32 +31,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- JPA Data (We are going to use Repositories, Entities, Hibernate, etc...) -->
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <!-- Use MySQL Connector-J -->
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -64,47 +43,24 @@
             <version>5.0.5.RELEASE</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-spatial -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-spatial</artifactId>
-            <version>5.2.17.Final</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>postgresql</artifactId>
-                    <groupId>postgresql</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <dependency>
             <groupId>de.grundid.opendatalab</groupId>
             <artifactId>geojson-jackson</artifactId>
             <version>1.8</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-neo4j</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-bolt-driver-->
-        <dependency>
-            <groupId>org.neo4j</groupId>
-            <artifactId>neo4j-ogm-bolt-driver</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.neo4j</groupId>
-            <artifactId>neo4j-spatial</artifactId>
-            <version>0.25.6-neo4j-3.4.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.neo4j</groupId>
-            <artifactId>neo4j</artifactId>
-            <version>3.4.5</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.8.2</version>
+        </dependency>
+
     </dependencies>
 
 	<build>
